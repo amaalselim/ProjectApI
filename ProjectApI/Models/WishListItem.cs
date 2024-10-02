@@ -7,6 +7,6 @@ namespace ProjectApI.Models
         public int Id { get; set; }
         [ForeignKey("product")]
         public int ProductId { get; set; }
-        public product? product { get; set; }
+        public Product? product { get; set; }
     }
 }
