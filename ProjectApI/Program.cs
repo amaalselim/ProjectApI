@@ -22,9 +22,17 @@ namespace ProjectApI
             builder.Services.AddDbContext<Context>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("cs")));
 
-            //builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<Context>().AddDefaultTokenProviders();
+            builder.Services.AddIdentity<User, IdentityRole>()
+            .AddEntityFrameworkStores<Context>()
+            .AddDefaultTokenProviders();
 
-            builder.Services.AddControllers();
+
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            builder.Services.AddControllers().ConfigureApiBehaviorOptions(
+                options => options.SuppressModelStateInvalidFilter = true
+            );
+
 
 
             builder.Services.AddAuthentication(
@@ -55,12 +63,11 @@ namespace ProjectApI
                     });
                 });
 
-
-            /* builder.Services.AddAuthorization(options =>
-             {
-                 options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
-                 options.AddPolicy("User", policy => policy.RequireRole("User"));
-             });*/
+                builder.Services.AddAuthorization(options =>
+                {
+                    options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
+                    options.AddPolicy("User", policy => policy.RequireRole("User"));
+                });
 
 
             /*-----------------------------Swagger Part-----------------------------*/
@@ -106,7 +113,7 @@ namespace ProjectApI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+            
             builder.Services.AddHttpContextAccessor();  
 
             var app = builder.Build();
