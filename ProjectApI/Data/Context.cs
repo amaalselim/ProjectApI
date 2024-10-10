@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ProjectApI.Models;
 
 namespace ProjectApI.Data
 {
-    public class Context : DbContext
+    public class Context : IdentityDbContext
     {
         public DbSet<Category> categories { get; set; }
         public DbSet<Product> products  { get; set; }
