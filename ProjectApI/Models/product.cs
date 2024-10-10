@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ProjectApI.Models
 {
@@ -9,7 +10,8 @@ namespace ProjectApI.Models
         public string Description { get; set; }
         public decimal Price { get; set; }
         [ForeignKey("Category")]
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
+        [JsonIgnore]
         public Category? Category { get; set; }
     }
 }
