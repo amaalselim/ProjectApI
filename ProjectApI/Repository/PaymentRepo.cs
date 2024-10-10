@@ -10,6 +10,7 @@ namespace ProjectApI.Repository
         private readonly Context _context;
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly UserManager<User> _userManager;
+
         public PaymentRepo(Context context,IHttpContextAccessor httpContextAccessor,UserManager<User> userManager)
         {
             _context = context;

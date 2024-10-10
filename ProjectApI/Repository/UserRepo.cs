@@ -16,10 +16,6 @@ namespace ProjectApI.Repository
         private readonly UserManager<User> _manager;
         private readonly IConfiguration _config;
 
-        public UserRepo(Context context)
-        {
-            _context = context;
-        }
         public UserRepo(Context context,UserManager<User>manager,IConfiguration config)
         {
             _config = config;
@@ -70,13 +66,15 @@ namespace ProjectApI.Repository
 
         public async Task<IdentityResult> Register(RegisterDTO registerDTO)
         {
-            User user = new User();
-            user.UserName = registerDTO.UserName;
-            user.Email= registerDTO.Email;
-            user.PasswordHash = registerDTO.Password;
-            user.PhoneNumber = registerDTO.PhoneNumber;
+            User user = new User
+            {
+                UserName = registerDTO.UserName,
+                Email = registerDTO.Email,
+                PhoneNumber = registerDTO.PhoneNumber
+            };
+            
 
-            IdentityResult result = await _manager.CreateAsync(user, registerDTO.UserName);
+            var result = await _manager.CreateAsync(user, registerDTO.Password);
             return result;
 
         }
